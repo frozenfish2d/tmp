@@ -20,7 +20,7 @@ public class Calculator {
         StringBuilder rpnString = new StringBuilder();
         Stack<Character> stack = new Stack<>();
         int priority;
-
+        int openBracketsCount = 0;
         for (int i = 0; i < expr.length(); i++) {
             priority = getPriority(expr.charAt(i));
             if (priority == 0) {
@@ -28,6 +28,7 @@ public class Calculator {
             }
             if (priority == 1) {
                 stack.push(expr.charAt(i));
+                openBracketsCount++;
             }
             if (priority > 1) {
                 rpnString.append(' ');
@@ -40,12 +41,16 @@ public class Calculator {
             }
 
             if (priority == -1) {
+                if (openBracketsCount > 1) {
+                    return null;
+                }
                 rpnString.append(' ');
                 try {
                     while (getPriority(stack.peek()) != 1) {
                         rpnString.append(stack.pop());
                     }
                     stack.pop();
+                    openBracketsCount = 0;
                 } catch (EmptyStackException e) {
                     return null;
                 }
@@ -83,7 +88,7 @@ public class Calculator {
 
 
                 double second = stack.pop();
-                if(stack.empty() || second==stack.peek())
+                if (stack.empty() || second == stack.peek())
                     return null;
                 if (second == 0 && rpnString.charAt(i) == '/') return null;
                 double first = stack.pop();
