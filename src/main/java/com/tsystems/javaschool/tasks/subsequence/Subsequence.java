@@ -17,11 +17,12 @@ public class Subsequence {
     public boolean find(List x, List y) {
         if (x == null || y == null) throw new IllegalArgumentException();
 
+
+        boolean result = false;
+        List<Object> firstList = new LinkedList(x);
+        List<Object> secondList = new LinkedList(y);
+        List<Object> bufferList = new LinkedList();
         try {
-            boolean result = false;
-            List<Object> firstList = new LinkedList(x);
-            List<Object> secondList = new LinkedList(y);
-            List<Object> bufferList = new LinkedList();
             int j = 0;
 
             for (int i = 0; i < firstList.size() && secondList.size() > 0; i++) {
@@ -37,8 +38,6 @@ public class Subsequence {
                 }
             }
             if (firstList.equals(bufferList)) result = true;
-
-
             return result;
         } catch (Exception e) {
             return false;

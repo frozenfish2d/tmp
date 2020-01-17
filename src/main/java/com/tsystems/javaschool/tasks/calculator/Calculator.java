@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.tasks.calculator;
 
+import java.text.DecimalFormat;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
@@ -95,8 +96,6 @@ public class Calculator {
 
         }
         double answer = stack.pop();
-
-
         if (answer % 1 == 0) {
             return Integer.toString((int) answer);
         } else {
@@ -104,6 +103,7 @@ public class Calculator {
         }
 
     }
+
 
     private static int getPriority(char token) {
         if (token == '*' || token == '/') {

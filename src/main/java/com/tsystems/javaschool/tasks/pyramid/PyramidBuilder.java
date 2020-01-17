@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.tasks.pyramid;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PyramidBuilder {
 
@@ -17,7 +18,14 @@ public class PyramidBuilder {
     private int max;
 
     public int[][] buildPyramid(List<Integer> inputNumbers) {
+
         if (inputNumbers.contains(null) || inputNumbers.size() < 3) throw new CannotBuildPyramidException();
+
+        List<Integer> checkList = inputNumbers.stream().distinct().collect(Collectors.toList());
+        if(checkList.size()==1){
+            throw new CannotBuildPyramidException();
+        }
+
         boolean canBuild = false;
         double x = -1;
         int n = 1;
