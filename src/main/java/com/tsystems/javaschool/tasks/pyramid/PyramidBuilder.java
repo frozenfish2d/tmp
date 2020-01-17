@@ -17,47 +17,42 @@ public class PyramidBuilder {
     private int max;
 
     public int[][] buildPyramid(List<Integer> inputNumbers) {
-        try {
-            if (inputNumbers.contains(null)) throw new CannotBuildPyramidException();
-            if (inputNumbers.size() < 3) throw new CannotBuildPyramidException();
-            boolean canBuild = false;
-            double x = -1;
-            int n = 1;
-            while (inputNumbers.size() - x > -1) {
-                x = (n * n + 3 * n + 2) / 2;
-                if ((x - inputNumbers.size()) == 0) {
-                    rows = n + 1;
-                    columns = n * 2 + 1;
-                    max = inputNumbers.size();
-                    canBuild = true;
-                    break;
-                }
-                n++;
+        if (inputNumbers.contains(null) || inputNumbers.size() < 3) throw new CannotBuildPyramidException();
+        boolean canBuild = false;
+        double x = -1;
+        int n = 1;
+        while (inputNumbers.size() - x > -1) {
+            x = (n * n + 3 * n + 2) / 2;
+            if ((x - inputNumbers.size()) == 0) {
+                rows = n + 1;
+                columns = n * 2 + 1;
+                max = inputNumbers.size();
+                canBuild = true;
+                break;
             }
-            if (!canBuild) throw new CannotBuildPyramidException();
-            inputNumbers.sort(Integer::compareTo);
-            int[][] pyramid = new int[rows][columns];
-            int number = max;
-            int start = columns;
-            int stop = -2;
-            int i = rows - 1;
-            while (i > -1) {
-                start--;
-                stop++;
-                int j = start;
-                while (j > stop) {
-                    pyramid[i][j] = inputNumbers.get(number - 1);
-                    number--;
-                    if (number == 0) break;
-                    j -= 2;
-                }
-                i--;
-            }
-
-            return pyramid;
-        } catch (CannotBuildPyramidException e) {
-            return null;
+            n++;
         }
+        if (!canBuild) throw new CannotBuildPyramidException();
+        inputNumbers.sort(Integer::compareTo);
+        int[][] pyramid = new int[rows][columns];
+        int number = max;
+        int start = columns;
+        int stop = -2;
+        int i = rows - 1;
+        while (i > -1) {
+            start--;
+            stop++;
+            int j = start;
+            while (j > stop) {
+                pyramid[i][j] = inputNumbers.get(number - 1);
+                number--;
+                if (number == 0) break;
+                j -= 2;
+            }
+            i--;
+        }
+        return pyramid;
+
     }
 
 
